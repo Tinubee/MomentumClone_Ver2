@@ -1,29 +1,44 @@
-const loginForm = document.querySelector("#login-form");
-const loginInput = document.querySelector("#login-form input");
-const greeting = document.querySelector("#greeting");
+const nameContainer = document.querySelector(".js-name");
 
-const HIDDEN_CLASSNAME = "hidden";
-const USERNAME_KEY = "username";
-
-function onLoginSubmit(event) {
-    event.preventDefault(); //브라우저의 기본동작을 막아준다
-    loginForm.classList.add(HIDDEN_CLASSNAME); //Form을 다시 숨긴다
-    localStorage.setItem(USERNAME_KEY, loginInput.value); //username을 localStorage에 저장
-    paintGreetings(); //함수호출
+function paintName(name) {
+  nameContainer.innerHTML = "";
+  const title = document.createElement("span");
+  title.className = "name__text";
+  title.innerHTML = `Hello ${name}`;
+  nameContainer.appendChild(title);
 }
 
-function paintGreetings() {
-    const username = localStorage.getItem(USERNAME_KEY);
-    greeting.innerText = `Hello ${username}`;
-    greeting.classList.remove(HIDDEN_CLASSNAME);
+function handleSubmit(event) {
+  event.preventDefault();
+  const form = event.target;
+  const input = form.querySelector("input");
+  const value = input.value;
+  localStorage.setItem("username", value);
+  paintName(value);
 }
 
-const savedUsername = localStorage.getItem(USERNAME_KEY);
+function paintInput() {
+  const input = document.createElement("input");
+  input.placeholder = "Type your name here";
+  input.type = "text";
+  input.className = "name__input";
+  const form = document.createElement("form");
+  form.addEventListener("submit", handleSubmit);
+  form.appendChild(input);
+  nameContainer.appendChild(form);
+}
 
-if (savedUsername == null) {
-    loginForm.classList.remove(HIDDEN_CLASSNAME);
-    loginForm.addEventListener("submit", onLoginSubmit);
+function loadName() {
+  const name = localStorage.getItem("username");
+  if (name === null) {
+    paintInput();
+  } else {
+    paintName(name);
+  }
 }
-else {
-    paintGreetings();
+
+function init() {
+  loadName();
 }
+
+init();

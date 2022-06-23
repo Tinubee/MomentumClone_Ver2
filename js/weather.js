@@ -1,27 +1,54 @@
-//cda1454b585bcb33d89d7c4cc9d0f41f
-//https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}
+const API_KEY = Global.WEATHER_API_KEY;
+const WEATHER_API = "https://api.openweathermap.org/data/2.5/weather?";
 
-const WEATHER_API_KEY = "cda1454b585bcb33d89d7c4cc9d0f41f";
+const weather = document.querySelector(".js-weather .weather__text");
 
-function onGeoOK(position) {
+function getWeather(coords) {
+  console.log(
+    `${WEATHER_API}lat=${coords.lat}&lon=${coords.lng}&appid=${API_KEY}&units=metric`
+  );
+  fetch(
+    `${WEATHER_API}lat=${coords.lat}&lon=${coords.lng}&appid=${API_KEY}&units=metric`
+  )
+    .then((response) => response.json())
+    .then((json) => {
+      const name = json.name;
+      const temperature = json.main.temp;
+      weather.innerHTML = `${Math.floor(temperature)}° @ ${name}`;
+    });
+}
+
+function handleGeoSuccess(position) {
   const lat = position.coords.latitude;
   const lng = position.coords.longitude;
-  const URL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${WEATHER_API_KEY}&units=metric`;
-  fetch(URL)
-    .then((response) => response.json())
-    .then((data) => {
-      const weather = document.querySelector("#weather span:first-child");
-      const city = document.querySelector("#weather span:last-child");
-      const temp = data.main.temp.toFixed(1);
-      city.innerText = data.name;
-      weather.innerText = `${data.weather[0].main} / ${temp}°C`;
-    });
-  /* promise : 당장 실행하지 않고 시간이 좀 걸린 뒤에 실행.(서버 응답 시간)
-     .then()사용해야함 */
+  const coords = {
+    lat,
+    lng,
+  };
+  localStorage.setItem("coords", JSON.stringify(coords));
+  getWeather(coords);
 }
 
-function onGeoError() {
-  alert("Can't get your location");
+function handleGeoFailure() {
+  console.log("no location");
 }
 
-navigator.geolocation.getCurrentPosition(onGeoOK, onGeoError);
+function loadWeather() {
+  const currentCoords = localStorage.getItem("coords");
+  if (currentCoords !== null) {
+    const parsedCoords = JSON.parse(currentCoords);
+    getWeather(parsedCoords);
+    return;
+  } else {
+    navigator.geolocation.getCurrentPosition(
+      handleGeoSuccess,
+      handleGeoFailure
+    );
+  }
+}
+
+function init() {
+  loadWeather();
+}
+
+init();
