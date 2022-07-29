@@ -2,11 +2,9 @@ const API_KEY = Global.WEATHER_API_KEY;
 const WEATHER_API = "https://api.openweathermap.org/data/2.5/weather?";
 
 const weather = document.querySelector(".js-weather .weather__text");
+const weather2 = document.querySelector(".js-weathericon");
 
 function getWeather(coords) {
-  console.log(
-    `${WEATHER_API}lat=${coords.lat}&lon=${coords.lng}&appid=${API_KEY}&units=metric`
-  );
   fetch(
     `${WEATHER_API}lat=${coords.lat}&lon=${coords.lng}&appid=${API_KEY}&units=metric`
   )
@@ -15,7 +13,16 @@ function getWeather(coords) {
       const name = json.name;
       const temperature = json.main.temp;
       weather.innerHTML = `${Math.floor(temperature)}° @ ${name}`;
+      weatherIconSet(json.weather[0].description);
     });
+}
+
+function weatherIconSet(description) {
+  const icon = document.createElement("div");
+  icon.className = "icon";
+  if (description === "haze") {
+  } else if (description === "haze") {
+  }
 }
 
 function handleGeoSuccess(position) {

@@ -1,3 +1,6 @@
-✔️ momentumClone by Nomadcoders
+## Nomadcoder Momentum Clone Version 2
 
-Link : https://nomadcoders.co/javascript-for-beginners/lobby
+### Nomadcoder 10주 Study 2번째 최종과제.
+
+✓ Link : https://nomadcoders.co/javascript-for-beginners
+

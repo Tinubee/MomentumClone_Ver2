@@ -1,8 +1,122 @@
 .weather {
   position: absolute;
   font-style: italic;
-  font-size: 12px;
+  font-size: 14px;
   position: absolute;
   top: 25px;
   right: 25px;
+}
+.js-weathericon {
+  position: absolute;
+  top: 55px;
+  right: 50px;
+}
+.icon {
+  position: relative;
+  display: inline-block;
+  margin: 5%;
+  width: 4em;
+  height: 4em;
+  font-size: 10px;
+}
+
+.cloud2 {
+  color: #181c1d;
+  background: #181c1d;
+  position: absolute;
+  width: 3.4875em;
+  height: 3.4875em;
+  border-radius: 50%;
+  box-shadow: 2.0625em 0.9375em 0 -0.9375em, 0 0 0 0.375em white, 2.0625em 0.9375em 0 -0.5625em white;
+}
+
+.cloud2:after {
+  color: #181c1d;
+  background: #181c1d;
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 1.8em;
+  display: block;
+  width: 2em;
+  height: 1em;
+  box-shadow: 0 0.4375em 0 -0.0625em white;
+}
+
+
+.small-cloud {
+  background: #181c1d;
+  box-shadow: 2.0625em 0.9375em 0 -0.9375em, 0 0 0 0.375em white, 2.0625em 0.9375em 0 -0.5625em white;
+  opacity: 0.3;
+  transform: scale(0.5) translate(6em, -3em);
+  animation: move 5s infinite linear;
+}
+
+.sun {
+  position: absolute;
+  width: 2.5em;
+  margin: 0.8em;
+  height: 2.5em;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0.375em white;
+}
+
+.rays {
+  position: relative;
+  transform: translate(1.1em, -0.8em);
+}
+.ray {
+  position: absolute;
+  margin: 0.8em;
+  width: 0.4em;
+  height: 4.2em;
+  box-shadow: 0 0.5em 0 0 white, 0 -0.5em 0 0 white;
+}
+.ray:nth-child(1) {
+  animation: spin-0 10s infinite linear;
+}
+.ray:nth-child(2) {
+  transform: rotate(45deg);
+  animation: spin-45 10s infinite linear;
+}
+.ray:nth-child(3) {
+  transform: rotate(90deg);
+  animation: spin-90 10s infinite linear;
+}
+.ray:nth-child(4) {
+  transform: rotate(135deg);
+  animation: spin-135 10s infinite linear;
+}
+
+@keyframes move {
+	 0% {
+		 opacity: 0;
+	}
+	 50% {
+		 opacity: 0.5;
+	}
+	 100% {
+		 transform: scale(0.5) translate(-6em, -3em);
+		 opacity: 0;
+	}
+}
+@keyframes spin-0 {
+  100% {
+    transform: rotate(360deg);
+ }
+}
+@keyframes spin-45 {
+  100% {
+    transform: rotate(405deg);
+ }
+}
+@keyframes spin-90 {
+  100% {
+    transform: rotate(450deg);
+ }
+}
+@keyframes spin-135 {
+  100% {
+    transform: rotate(495deg);
+ }
 }
